@@ -14,7 +14,9 @@ class TestSignIn:
     def test_signin(self):
         self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
         self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
-        self.driver.find_element(By.ID, 'passwd').send_keys('qwerty', Keys.RETURN)
+        self.driver.find_element(By.ID, 'passwd')
+        self.driver.implicitly_wait(10)
+        # Enter the password manually
         assert self.driver.find_element(By.CLASS_NAME, 'account').text == 'test one', "cannot find the username, verify credentials"
     
     def teardown_method(self) :
