@@ -2,7 +2,6 @@ import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
-import requests
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -11,34 +10,37 @@ class TestSignIn :
     def setup_method(self) :
         self.driver = webdriver.Chrome()
         self.driver.get('http://automationpractice.com/index.php')
+        self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
+        self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
+        self.driver.find_element(By.ID, 'passwd').send_keys('qwerty', Keys.RETURN)
 
     def test_signin(self) :
-        self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
-        self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
-        self.driver.find_element(By.ID, 'passwd')
-        self.driver.implicitly_wait(10)
-        # Enter the password manually
-        assert self.driver.find_element(By.CLASS_NAME,
-                                        'account').text == 'test one', "cannot find the username, verify credentials"
+        assert WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'account'))).text \
+               == 'test one', "cannot find the username, verify credentials"
 
-    def test_signout(self):
-        self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
-        self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
-        self.driver.find_element(By.ID, 'passwd')
-        self.driver.implicitly_wait(10)
-        # Enter the password manually
+    def test_signout(self) :
         self.driver.find_element_by_xpath('//a[@class="logout"]').click()
-        self.driver.implicitly_wait(10)
         assert self.driver.find_element(By.XPATH, '//a[@class="login"]').text == \
-               'Sign in', "cannot find the sign in, still logged in"
-
+               'Sign in', "cannot find the sign in button, still logged in"
 
     def teardown_method(self) :
         self.driver.quit()
 
+class TestFullOrder:
+    def setup_method(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get('http://automationpractice.com/index.php?id_category=3&controller=category')
+
+    def test_add_to_cart(self):
+        action = webdriver.ActionChains(self.driver)
+        action.move_to_element(self.driver.find_element(By.CLASS_NAME, 'product-container'))\
+            .click(self.driver.find_element(By.XPATH,'//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]')).perform()
+        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="layer_cart"]/div[1]/div[2]/div[4]/a'))).click()
+        expectedresult = 'Your shopping cart contains: 1 Product'
+        actualresult= self.driver.find_element(By.CLASS_NAME, 'heading-counter').text
+        assert expectedresult == actualresult, 'The number of products in Cart does not match'
 
 class TestSearch :
-
     def setup_method(self) :
         self.driver = webdriver.Chrome()
         self.driver.get('http://automationpractice.com/index.php')
