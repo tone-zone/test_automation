@@ -26,19 +26,23 @@ class TestSignIn :
     def teardown_method(self) :
         self.driver.quit()
 
-class TestFullOrder:
-    def setup_method(self):
+
+class TestFullOrder :
+    def setup_method(self) :
         self.driver = webdriver.Chrome()
         self.driver.get('http://automationpractice.com/index.php?id_category=3&controller=category')
 
-    def test_add_to_cart(self):
+    def test_add_to_cart(self) :
         action = webdriver.ActionChains(self.driver)
-        action.move_to_element(self.driver.find_element(By.CLASS_NAME, 'product-container'))\
-            .click(self.driver.find_element(By.XPATH,'//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]')).perform()
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.XPATH,'//*[@id="layer_cart"]/div[1]/div[2]/div[4]/a'))).click()
+        action.move_to_element(self.driver.find_element(By.CLASS_NAME, 'product-container')) \
+            .click(
+            self.driver.find_element(By.XPATH, '//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]')).perform()
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="layer_cart"]/div[1]/div[2]/div[4]/a'))).click()
         expectedresult = 'Your shopping cart contains: 1 Product'
-        actualresult= self.driver.find_element(By.CLASS_NAME, 'heading-counter').text
+        actualresult = self.driver.find_element(By.CLASS_NAME, 'heading-counter').text
         assert expectedresult == actualresult, 'The number of products in Cart does not match'
+
 
 class TestSearch :
     def setup_method(self) :
