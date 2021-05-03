@@ -32,17 +32,27 @@ class TestFullOrder :
         self.driver = webdriver.Chrome()
         self.driver.get('http://automationpractice.com/index.php?id_category=3&controller=category')
 
-    def test_add_to_cart(self) :
+    def test_pay_by_check(self) :
         action = webdriver.ActionChains(self.driver)
         action.move_to_element(self.driver.find_element(By.CLASS_NAME, 'product-container')) \
             .click(
             self.driver.find_element(By.XPATH, '//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]')).perform()
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="layer_cart"]/div[1]/div[2]/div[4]/a'))).click()
-        expectedresult = 'Your shopping cart contains: 1 Product'
-        actualresult = self.driver.find_element(By.CLASS_NAME, 'heading-counter').text
-        assert expectedresult == actualresult, 'The number of products in Cart does not match'
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='center_column']/p[2]/a[1]"))).click()
+        self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
+        self.driver.find_element(By.ID, 'passwd').send_keys('qwerty', Keys.RETURN)
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='center_column']/form/p/button"))).click()
+        self.driver.find_element(By.CLASS_NAME, 'checker').click()
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='form']/p/button"))).click()
+        self.driver.find_element(By.CLASS_NAME, 'cheque').click()
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='cart_navigation']/button"))).click()
+        expectedresult = 'Your order on My Store is complete.'
+        actualresult = self.driver.find_element(By.CLASS_NAME, 'alert-success').text
+        assert expectedresult == actualresult, 'The order did not go through'
 
+    def teardown_method(self) :
+        self.driver.quit()
 
 class TestSearch :
     def setup_method(self) :
