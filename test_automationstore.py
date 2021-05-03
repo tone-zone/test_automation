@@ -39,12 +39,12 @@ class TestFullOrder :
             self.driver.find_element(By.XPATH, '//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]')).perform()
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="layer_cart"]/div[1]/div[2]/div[4]/a'))).click()
-        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='center_column']/p[2]/a[1]"))).click()
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CLASS_NAME, "standard-checkout"))).click()
         self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
         self.driver.find_element(By.ID, 'passwd').send_keys('qwerty', Keys.RETURN)
         WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='center_column']/form/p/button"))).click()
         self.driver.find_element(By.CLASS_NAME, 'checker').click()
-        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='form']/p/button"))).click()
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.CLASS_NAME, "standard-checkout"))).click()
         self.driver.find_element(By.CLASS_NAME, 'cheque').click()
         WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='cart_navigation']/button"))).click()
         expectedresult = 'Your order on My Store is complete.'
