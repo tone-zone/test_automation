@@ -9,7 +9,7 @@ pipeline {
 
     stage('test') {
       steps {
-        bat 'pytest test_automationstore.py'
+        powershell 'pytest test_automationstore.py'
       }
     }
 
