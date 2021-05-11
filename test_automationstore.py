@@ -1,4 +1,7 @@
+import time
 import pytest
+import pytest_html
+import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
@@ -54,10 +57,12 @@ class TestFullOrder :
     def teardown_method(self) :
         self.driver.quit()
 
+@pytest.mark.search
 class TestSearch :
     def setup_method(self) :
         self.driver = webdriver.Chrome()
         self.driver.get('http://automationpractice.com/index.php')
+        assert self.driver.title == 'My Store'
 
     def test_blank_search(self) :
         searchquery = ''
@@ -68,7 +73,7 @@ class TestSearch :
         assert expectedresult == actualresult, f"Error. Expected text:{expectedresult} but actual text:{actualresult}"
 
     def test_empty_result_search(self) :
-        searchquery = '123'
+        searchquery = 'se'
         self.driver.find_element(By.ID, 'search_query_top').send_keys(f'{searchquery}', Keys.RETURN)
         expectedresult = f'No results were found for your search \"{searchquery}\"'
         actualresult = WebDriverWait(self.driver, 10).until(
@@ -83,5 +88,17 @@ class TestSearch :
             EC.presence_of_element_located((By.XPATH, "//span[@class='lighter']"))).text.lower()
         assert expectedresult == actualresult, f"Error. Expected text:{expectedresult} but actual text:{actualresult}"
 
+    def test_fail(self):
+        assert False
+
     def teardown_method(self) :
         self.driver.quit()
+
+@pytest.mark.search_firefox
+def setup_method(self) :
+    # http://localhost:4444/grid/console on the web browser
+    self.driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
+                                       desired_capabilities={'browserName': 'firefox', 'javascriptEnabled': True})
+    self.driver.get('http://automationpractice.com/index.php')
+    assert self.driver.title == 'My Store'
+
