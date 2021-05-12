@@ -8,10 +8,14 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 
 class TestSignIn :
     def setup_method(self):
-        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install())
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), chrome_options=options)
         self.driver.get('http://automationpractice.com/index.php')
         self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
         self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
