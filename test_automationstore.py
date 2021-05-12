@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
+@pytest.mark.signin
 class TestSignIn :
     def setup_method(self):
         options = Options()
