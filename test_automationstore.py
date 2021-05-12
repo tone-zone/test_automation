@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class TestSignIn :
     def setup_method(self):
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install())
         self.driver.get('http://automationpractice.com/index.php')
         self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
         self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
