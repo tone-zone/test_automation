@@ -13,8 +13,12 @@ from selenium.webdriver.chrome.options import Options
 class TestSignIn :
     def setup_method(self):
         options = Options()
-        options.add_argument('--headless')
-        options.add_argument('--disable-gpu')
+        options.binary_location = "C:\\path\\to\\chrome.exe"  # chrome binary location specified here
+        options.add_argument("--start-maximized")  # open Browser in maximized mode
+        options.add_argument("--no-sandbox")  # bypass OS security model
+        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
         self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), chrome_options=options)
         self.driver.get('http://automationpractice.com/index.php')
         self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
