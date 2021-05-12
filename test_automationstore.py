@@ -7,11 +7,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from webdriver_manager.chrome import ChromeDriverManager
 
 class TestSignIn :
-    def setup_method(self) :
-        self.driver = webdriver.Chrome()
+    def setup_method(self):
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.get('http://automationpractice.com/index.php')
         self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
         self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
@@ -32,7 +32,7 @@ class TestSignIn :
 
 class TestFullOrder :
     def setup_method(self) :
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.get('http://automationpractice.com/index.php?id_category=3&controller=category')
 
     def test_pay_by_check(self) :
@@ -60,7 +60,7 @@ class TestFullOrder :
 @pytest.mark.search
 class TestSearch :
     def setup_method(self) :
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.get('http://automationpractice.com/index.php')
         assert self.driver.title == 'My Store'
 
