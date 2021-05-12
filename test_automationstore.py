@@ -13,8 +13,8 @@ from selenium.webdriver.chrome.options import Options
 class TestSignIn :
     def setup_method(self):
         options = Options()
-        options.add_argument("--headless")  # Runs Chrome in headless mode.
         options.add_argument("--no-sandbox")  # bypass OS security model
+        options.add_argument("--headless")  # Runs Chrome in headless mode.
         options.add_argument("--start-maximized")  # open Browser in maximized mode
         options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
