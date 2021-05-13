@@ -1,7 +1,5 @@
 import time
 import pytest
-import pytest_html
-import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
@@ -13,13 +11,7 @@ from selenium.webdriver.chrome.options import Options
 @pytest.mark.signin
 class TestSignIn :
     def setup_method(self):
-        options = Options()
-        options.add_argument("--no-sandbox")  # bypass OS security model
-        options.add_argument("--headless")  # Runs Chrome in headless mode.
-        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option('useAutomationExtension', False)
-        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), chrome_options=options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.get('http://automationpractice.com/index.php')
         self.driver.find_element(By.XPATH, '//a[@class="login"]').click()
         self.driver.find_element(By.ID, 'email').send_keys('dpzxgplnwruquftlpn@mhzayt.online')
