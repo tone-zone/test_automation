@@ -32,7 +32,13 @@ class TestSignIn :
 
 class TestFullOrder :
     def setup_method(self) :
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+        options = Options()
+        options.add_argument("--no-sandbox")  # bypass OS security model
+        options.add_argument("--headless")  # Runs Chrome in headless mode.
+        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), chrome_options=options)
         self.driver.get('http://automationpractice.com/index.php?id_category=3&controller=category')
 
     def test_pay_by_check(self) :
@@ -60,7 +66,13 @@ class TestFullOrder :
 @pytest.mark.search
 class TestSearch :
     def setup_method(self) :
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+        options = Options()
+        options.add_argument("--no-sandbox")  # bypass OS security model
+        options.add_argument("--headless")  # Runs Chrome in headless mode.
+        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), chrome_options=options)
         self.driver.get('http://automationpractice.com/index.php')
         assert self.driver.title == 'My Store'
 
@@ -93,14 +105,3 @@ class TestSearch :
 
     def teardown_method(self) :
         self.driver.quit()
-
-
-'''
-@pytest.mark.search_firefox
-def setup_method(self) :
-    # http://localhost:4444/grid/console on the web browser
-    self.driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
-                                       desired_capabilities={'browserName': 'firefox', 'javascriptEnabled': True})
-    self.driver.get('http://automationpractice.com/index.php')
-    assert self.driver.title == 'My Store'
-'''
