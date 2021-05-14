@@ -95,7 +95,6 @@ class TestSearch :
         yield self.driver
         self.driver.quit()
 
-
     def test_blank_search(self,setup_chrome) :
         searchquery = ''
         self.driver.find_element(By.ID, 'search_query_top').send_keys(f'{searchquery}', Keys.RETURN)
