@@ -121,13 +121,3 @@ class TestSearch :
 
     def test_fail(self,setup_chrome):
         assert False
-
-'''
-@pytest.mark.search_firefox
-def setup_method(self) :
-    # http://localhost:4444/grid/console on the web browser
-    self.driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub',
-                                       desired_capabilities={'browserName': 'firefox', 'javascriptEnabled': True})
-    self.driver.get('http://automationpractice.com/index.php')
-    assert self.driver.title == 'My Store'
-'''
