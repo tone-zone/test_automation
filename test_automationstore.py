@@ -121,3 +121,7 @@ class TestSearch :
 
     def test_fail(self,setup_chrome):
         assert False
+        # making sure it captures failed test
+        
+        
+        
